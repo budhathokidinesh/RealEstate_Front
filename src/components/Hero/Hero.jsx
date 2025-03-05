@@ -1,6 +1,8 @@
 import React from "react";
 import "./Hero.css";
 import ph from "@/assets/ph.jpg";
+import { HiLocationMarker } from "react-icons/hi";
+import CountUp from "react-countup";
 
 const Hero = () => {
   return (
@@ -8,23 +10,58 @@ const Hero = () => {
       <div className=" paddings innerWidth flexCenter hero-container">
         {/* Left section  */}
         <div className="flexColStart hero-left">
+          {/* Title  */}
           <div className="hero-title">
+            <div className="orange-circle" />
             <h1>
               Real estate <br />
               is not about houses, <br />
               it's about people.
             </h1>
           </div>
+          {/* Description  */}
           <div className="flexColStart hero-de">
-            <span>Find your next property</span>
-            <span>
-              Maximise the potential of your <br />
-              property investment with
+            <span className="secondaryText">
+              Find your next property with us.
+            </span>
+            <br />
+            <span className="secondaryText">
+              Maximise the potential of <br />
+              your property investment with
               <br />
-              Australia's #1 real estate brand
+              Australia's #1 real estate brand.
             </span>
           </div>
-          <div className="search-bar">Search</div>
+          {/* Search Bar  */}
+          <div className="flexCenter search-bar">
+            <HiLocationMarker color="var(--blue)" size={25} />
+            <input type="text" />
+            <button className="button">Search</button>
+          </div>
+          {/* Countng Numbers  */}
+          <div className="flexCenter stats">
+            <div className="flexColCenter stat">
+              <span>
+                <CountUp start={8000} end={9000} duration={10} />
+                <span>+</span>
+              </span>
+              <span>Premium Products</span>
+            </div>
+            <div className="flexColCenter stat">
+              <span>
+                <CountUp start={810} end={1000} duration={10} />
+                <span>+</span>
+              </span>
+              <span>Happy customers</span>
+            </div>
+            <div className="flexColCenter stat">
+              <span>
+                <CountUp end={30} />
+                <span>+</span>
+              </span>
+              <span>Award Winning</span>
+            </div>
+          </div>
         </div>
         {/* Right section  */}
         <div className=" flexCenter hero-right">
