@@ -1,12 +1,12 @@
 import "./App.css";
 import Header from "@/components/Header/Header.jsx";
-import Hero from "@/components/hero/Hero";
-import Companies from "@/components/companies/Companies";
-import Residencies from "@/components/Residencies/Residencies";
-import Value from "@/components/Value/Value";
-import Contact from "@/components/Contact/Contact";
-import GetStarted from "@/components/GetStarted/GetStarted";
-import Footer from "@/components/Footer/Footer";
+import Hero from "@/components/hero/Hero.jsx";
+import Companies from "@/components/companies/Companies.jsx";
+import Residencies from "@/components/Residencies/Residencies.jsx";
+import Value from "@/components/Value/Value.jsx";
+import Contact from "@/components/Contact/Contact.jsx";
+import GetStarted from "@/components/GetStarted/GetStarted.jsx";
+import Footer from "@/components/Footer/Footer.jsx";
 
 function App() {
   return (
