@@ -1,6 +1,6 @@
 import "./App.css";
 import Header from "@/components/Header/Header.jsx";
-import Hero from "@/components/hero/Hero.jsx";
+import Hero from "@/components/Hero/Hero.jsx";
 import Companies from "@/components/companies/Companies.jsx";
 import Residencies from "@/components/Residencies/Residencies.jsx";
 import Value from "@/components/Value/Value.jsx";
