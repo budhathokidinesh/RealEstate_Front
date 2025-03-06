@@ -40,3 +40,13 @@
 .accordianButton .primaryText {
   font-size: 1.1rem;
 }
+@media (max-width: 1024px) {
+  .v-container {
+    flex-direction: column;
+  }
+  @media (max-width: 768px) {
+    .accordianButton .primaryText {
+      font-size: 0.8rem;
+    }
+  }
+}
