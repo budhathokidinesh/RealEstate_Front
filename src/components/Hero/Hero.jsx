@@ -1,9 +1,9 @@
 import React from "react";
 import "./Hero.css";
 import ph from "@/assets/ph.jpg";
-import { HiLocationMarker } from "react-icons/hi";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Hero = () => {
   return (
@@ -40,12 +40,7 @@ const Hero = () => {
               Australia's #1 real estate brand.
             </span>
           </div>
-          {/* Search Bar  */}
-          <div className="flexCenter search-bar">
-            <HiLocationMarker color="var(--blue)" size={25} />
-            <input type="text" />
-            <button className="button">Search</button>
-          </div>
+          <SearchBar />
           {/* Countng Numbers  */}
           <div className="flexCenter stats">
             <div className="flexColCenter stat">

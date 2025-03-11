@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import logo from "@/assets/logop.png";
 import "./Header.css";
 import { BiMenu } from "react-icons/bi";
@@ -14,20 +15,22 @@ const Header = () => {
   return (
     <section className="h-wrapper">
       <div className="flexCenter paddings innerWidth h-container">
-        <img src={logo} width={70} height={50} />
+        {/* Logo  */}
+        <Link to="/">
+          <img src={logo} width={70} height={50} />
+        </Link>
+
+        {/* Menu  */}
         <OutsideClickHandler
           onOutsideClick={() => {
             setMenuOpen(false);
           }}
         >
           <div className="flexCenter h-menu" style={getMenuStyles(menuOpen)}>
-            <a href="">Residencies</a>
-            <a href="">Our Values</a>
-            <a href="">Contact Us</a>
-            <a href="">Get Started</a>
-            <button className="button">
-              <a href="">Contact</a>
-            </button>
+            <NavLink to="/properties">Properties</NavLink>
+            <a href="mailto:physmarika@gmail.com">Contact</a>
+            {/* Login Button  */}
+            <button className="button">Login</button>
           </div>
           <div
             className="menu-icon"

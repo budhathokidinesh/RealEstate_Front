@@ -2,6 +2,9 @@
   position: relative;
   overflow-x: clip;
 }
+.wrapper {
+  background: white;
+}
 .App > :nth-child(1) {
   background: var(--black);
   position: relative;
