@@ -4,6 +4,8 @@ import logo from "@/assets/logop.png";
 import "./Header.css";
 import { BiMenu } from "react-icons/bi";
 import OutsideClickHandler from "react-outside-click-handler";
+import { useAuth0 } from "@auth0/auth0-react";
+import ProfileMenu from "@/components/ProfileMenu/ProfileMenu.jsx";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,6 +14,7 @@ const Header = () => {
       return { right: !menuOpen && "-100%" };
     }
   };
+  const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
   return (
     <section className="h-wrapper">
       <div className="flexCenter paddings innerWidth h-container">
@@ -30,7 +33,13 @@ const Header = () => {
             <NavLink to="/properties">Properties</NavLink>
             <a href="mailto:physmarika@gmail.com">Contact</a>
             {/* Login Button  */}
-            <button className="button">Login</button>
+            {!isAuthenticated ? (
+              <button className="button" onClick={loginWithRedirect}>
+                Login
+              </button>
+            ) : (
+              <ProfileMenu user={user} logout={logout} />
+            )}
           </div>
           <div
             className="menu-icon"

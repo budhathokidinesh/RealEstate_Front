@@ -34,3 +34,12 @@ export const getProperty = async (id) => {
     throw error;
   }
 };
+//Function to create user in backend
+export const createUser = async (email) => {
+  try {
+    await api.post("/api/user/register", { email });
+  } catch (error) {
+    toast.error("Something went wrong. Please try again. Thanks");
+    throw error;
+  }
+};
