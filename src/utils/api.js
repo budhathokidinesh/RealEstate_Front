@@ -72,3 +72,62 @@ export const bookVisit = async (date, propertyId, email, token) => {
     throw error;
   }
 };
+//function to remove booking
+export const removeBooking = async (id, email, token) => {
+  try {
+    await api.post(
+      `/api/user/cancelBooking/${id}`,
+      {
+        email,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    toast.error("Something went wrong, please try later");
+    throw error;
+  }
+};
+//function to add in favourite list
+export const toFev = async (id, email, token) => {
+  try {
+    await api.post(
+      `/api/user/toFav/${id}`,
+      {
+        email,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    toast.error("Something went wrong, please try later");
+    throw error;
+  }
+};
+// function to get all fevourites
+export const getAllFav = async (email, token) => {
+  if (!token) return;
+  try {
+    const res = await api.post(
+      `/api/user/allFav`,
+      {
+        email,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data["favResidenciesID"];
+  } catch (error) {
+    toast.error("Something went wrong, please try later");
+    throw error;
+  }
+};

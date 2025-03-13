@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
 import "./Property.css";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import { getProperty } from "@/utils/api.js";
 import { PuffLoader } from "react-spinners";
-import { AiFillHeart } from "react-icons/ai";
 import { FaShower } from "react-icons/fa6";
 import { MdOutlineBedroomParent } from "react-icons/md";
 import { BiSolidCarGarage } from "react-icons/bi";
@@ -15,6 +14,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import BookingModel from "@/components/BookingModel/BookingModel";
 import UserDetailContext from "@/context/UserDetailContext.js";
 import { Button } from "@mantine/core";
+import { toast } from "react-toastify";
+import { removeBooking } from "@/utils/api.js";
+import Heart from "@/components/Heart/Heart.jsx";
 
 const Property = () => {
   const { pathname } = useLocation();
@@ -31,6 +33,17 @@ const Property = () => {
     userDetails: { token, bookings },
     setUserDetails,
   } = useContext(UserDetailContext);
+
+  const { mutate: cancelBooking, isLoading: cancelling } = useMutation({
+    mutationFn: () => removeBooking(id, user?.email, token),
+    onSuccess: () => {
+      setUserDetails((prev) => ({
+        ...prev,
+        bookings: prev.bookings.filter((booking) => booking?.id !== id),
+      }));
+      toast.success("Booking cancelled", { position: "bottom-right" });
+    },
+  });
 
   if (isError) {
     return (
@@ -63,7 +76,7 @@ const Property = () => {
       <div className="flexColStart paddings innerWidth property-container">
         {/* like button  */}
         <div className="like">
-          <AiFillHeart size={24} color="white" />
+          <Heart id={id} />
         </div>
         {/* Image  */}
         <img src={data?.image} alt="home image" />
@@ -108,9 +121,21 @@ const Property = () => {
             </div>
             {/* booking button  */}
             {bookings?.map((booking) => booking.id).includes(id) ? (
-              <Button variant="outlne" w={"100%"} color="red">
-                <span>Cancel Booking</span>
-              </Button>
+              <>
+                <Button
+                  variant="outlne"
+                  w={"100%"}
+                  color="red"
+                  onClick={() => cancelBooking()}
+                  disabled={cancelling}
+                >
+                  <span>Cancel Booking</span>
+                </Button>
+                <span>
+                  Your visit is already booked for this date{" "}
+                  {bookings?.filter((booking) => booking?.id === id)[0].date}
+                </span>
+              </>
             ) : (
               <button
                 className="button"

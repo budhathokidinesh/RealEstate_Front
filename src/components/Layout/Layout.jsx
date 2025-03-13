@@ -6,10 +6,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import UserDetailContext from "@/context/UserDetailContext.js";
 import { useMutation } from "react-query";
 import { createUser } from "@/utils/api.js";
+import useFavourites from "@/components/hooks/useFavourites.jsx";
 const Layout = () => {
   const { isAuthenticated, user, getAccessTokenWithPopup } = useAuth0();
   const { setUserDetails } = useContext(UserDetailContext);
-
+  useFavourites();
   //to update user in the backend
   const { mutate } = useMutation({
     mutationKey: [user?.email],
