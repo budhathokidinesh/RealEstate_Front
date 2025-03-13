@@ -35,11 +35,40 @@ export const getProperty = async (id) => {
   }
 };
 //Function to create user in backend
-export const createUser = async (email) => {
+export const createUser = async (email, token) => {
   try {
-    await api.post("/api/user/register", { email });
+    await api.post(
+      "/api/user/register",
+      { email },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
   } catch (error) {
     toast.error("Something went wrong. Please try again. Thanks");
+    throw error;
+  }
+};
+//function for the book visit
+export const bookVisit = async (date, propertyId, email, token) => {
+  try {
+    await api.post(
+      `/api/user/bookVisit/${propertyId}`,
+      {
+        email,
+        id: propertyId,
+        date: dayjs(date).format("DD/MM/YYYY"),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    toast.error("Something gone wrong, please try again.");
     throw error;
   }
 };

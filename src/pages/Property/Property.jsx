@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./Property.css";
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
@@ -10,6 +10,12 @@ import { MdOutlineBedroomParent } from "react-icons/md";
 import { BiSolidCarGarage } from "react-icons/bi";
 import { MdLocationOn } from "react-icons/md";
 import Map from "@/components/Map/Map.jsx";
+import useAuthCheck from "@/components/hooks/useAuthCheck.jsx";
+import { useAuth0 } from "@auth0/auth0-react";
+import BookingModel from "@/components/BookingModel/BookingModel";
+import UserDetailContext from "@/context/UserDetailContext.js";
+import { Button } from "@mantine/core";
+
 const Property = () => {
   const { pathname } = useLocation();
   const id = pathname.split("/").slice(-1)[0];
@@ -17,6 +23,15 @@ const Property = () => {
   const { data, isLoading, isError } = useQuery(["resd", id], () =>
     getProperty(id)
   );
+  const [modelOpened, setModelOpened] = useState(false);
+  const { validateLogin } = useAuthCheck();
+  const { user } = useAuth0();
+
+  const {
+    userDetails: { token, bookings },
+    setUserDetails,
+  } = useContext(UserDetailContext);
+
   if (isError) {
     return (
       <div className="wrapper">
@@ -92,7 +107,28 @@ const Property = () => {
               </span>
             </div>
             {/* booking button  */}
-            <button className="button">Book Your Visit</button>
+            {bookings?.map((booking) => booking.id).includes(id) ? (
+              <Button variant="outlne" w={"100%"} color="red">
+                <span>Cancel Booking</span>
+              </Button>
+            ) : (
+              <button
+                className="button"
+                onClick={() => {
+                  validateLogin() && setModelOpened(true);
+                }}
+              >
+                Book Your Visit
+              </button>
+            )}
+
+            {/* Booking Model  */}
+            <BookingModel
+              opened={modelOpened}
+              setOpened={setModelOpened}
+              propertyId={id}
+              email={user?.email}
+            ></BookingModel>
           </div>
           {/* right side  */}
           <div className="map">
