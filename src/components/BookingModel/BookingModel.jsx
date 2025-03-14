@@ -7,6 +7,7 @@ import { useMutation } from "react-query";
 import { bookVisit } from "@/utils/api.js";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
+
 const BookingModel = ({ opened, setOpened, email, propertyId }) => {
   const [value, setValue] = useState(null);
   const {
@@ -41,9 +42,13 @@ const BookingModel = ({ opened, setOpened, email, propertyId }) => {
       opened={opened}
       onClose={() => setOpened(false)}
       title="Select your date of visit"
-      centered
     >
-      <div className="flexColCenter">
+      <div
+        className="flexColCenter"
+        style={{
+          gap: "1rem",
+        }}
+      >
         <DatePicker value={value} onChange={setValue} minDate={new Date()} />
         <Button disabled={!value || isLoading} onClick={() => mutate()}>
           Book Visit
