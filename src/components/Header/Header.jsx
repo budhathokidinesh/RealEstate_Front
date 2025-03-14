@@ -6,12 +6,21 @@ import { BiMenu } from "react-icons/bi";
 import OutsideClickHandler from "react-outside-click-handler";
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileMenu from "@/components/ProfileMenu/ProfileMenu.jsx";
+import AddPropertyModal from "@/components/AddPropertyModal/AddPropertyModal.jsx";
+import useAuthCheck from "@/components/hooks/useAuthCheck.jsx";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const getMenuStyles = (menuOpen) => {
     if (document.documentElement.clientWidth <= 800) {
       return { right: !menuOpen && "-100%" };
+    }
+  };
+  const [modalOpened, setModalOpened] = useState(false);
+  const { validateLogin } = useAuthCheck();
+  const handleAddPropertyClick = () => {
+    if (validateLogin) {
+      setModalOpened(true);
     }
   };
   const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
@@ -32,6 +41,10 @@ const Header = () => {
           <div className="flexCenter h-menu" style={getMenuStyles(menuOpen)}>
             <NavLink to="/properties">Properties</NavLink>
             <a href="mailto:physmarika@gmail.com">Contact</a>
+
+            {/* Add property  */}
+            <div onClick={() => handleAddPropertyClick}>Add property</div>
+            <AddPropertyModal opened={modalOpened} setOpened={setModalOpened} />
             {/* Login Button  */}
             {!isAuthenticated ? (
               <button className="button" onClick={loginWithRedirect}>
