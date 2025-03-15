@@ -4,13 +4,13 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import useProperties from "@/components/hooks/useProperties.jsx";
 import { PuffLoader } from "react-spinners";
 import PropertyCard from "@/components/PropertyCard/PropertyCard.jsx";
-import userDetailContext from "@/context/userDetailContext.js";
+import UserDetailContext from "@/context/UserDetailContext.js";
 const Favourites = () => {
   const { data, isError, isLoading } = useProperties();
   const [filter, setFilter] = useState("");
   const {
     userDetails: { favourites },
-  } = useContext(userDetailContext);
+  } = useContext(UserDetailContext);
   if (isError) {
     return (
       <div className="wrapper">
