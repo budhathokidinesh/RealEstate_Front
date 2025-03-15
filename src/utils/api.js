@@ -155,3 +155,25 @@ export const getAllBookings = async (email, token) => {
     throw error;
   }
 };
+
+//Function to create residency
+export const createResidency = async (data, token) => {
+  try {
+    await api.post(
+      `/api/residency/create`,
+      {
+        data,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  } catch (error) {
+    toast.error(
+      "Something wrong happened while uploading property, please try later"
+    );
+    throw error;
+  }
+};

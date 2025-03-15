@@ -1,13 +1,40 @@
 import { Modal, Button, Container, Stepper } from "@mantine/core";
 import { useState } from "react";
 import AddLocation from "@/components/AddLocation/AddLocation.jsx";
+import { useAuth0 } from "@auth0/auth0-react";
+import UploadImage from "@/components/UploadImage/UploadImage";
+import BasicDetails from "@/components/BasicDetails/BasicDetails.jsx";
+import Facilities from "@/components/Facilities/Facilities.jsx";
 
-const AddPropertyModal = () => {
-  const [opened, setOpened] = useState(false);
+const AddPropertyModal = ({ opened, setOpened }) => {
+  //   const [opened, setOpened] = useState(false);
   const [active, setActive] = useState(0);
+  const { user } = useAuth0();
+  const [propertyDetails, setPropertyDetails] = useState({
+    title: "",
+    description: "",
+    price: 0,
+    country: "",
+    city: "",
+    address: "",
+    image: null,
+    facilities: {
+      bedrooms: 0,
+      parkings: 0,
+      bathrooms: 0,
+    },
+    ownerEmail: user?.email,
+  });
+  const nextStep = () => {
+    setActive((current) => (current < 4 ? current + 1 : current));
+  };
+  const prevStep = () => {
+    setActive((current) => (current > 0 ? current - 1 : current));
+  };
+
   return (
     <>
-      <Button onClick={() => setOpened(true)}>Add Property</Button>
+      {/* <Button onClick={() => setOpened(true)}>Add Property</Button> */}
       <Modal
         opened={opened}
         onClose={() => setOpened(false)}
@@ -21,13 +48,39 @@ const AddPropertyModal = () => {
             allowNextStepsSelect={false}
           >
             <Stepper.Step label="Location" description="Address">
-              <AddLocation />
+              <AddLocation
+                nextStep={nextStep}
+                propertyDetails={propertyDetails}
+                setPropertyDetails={setPropertyDetails}
+              />
             </Stepper.Step>
-            <Stepper.Step label="Second step" description="Verify email">
-              Step 2 content: Verify email
+            <Stepper.Step label="Upload Image" description="Image">
+              <UploadImage
+                prevStep={prevStep}
+                nextStep={nextStep}
+                propertyDetails={propertyDetails}
+                setPropertyDetails={setPropertyDetails}
+              />
             </Stepper.Step>
-            <Stepper.Step label="Final step" description="Get full access">
-              Step 3 content: Get full access
+            <Stepper.Step
+              label="Basic Information"
+              description="Basic Information"
+            >
+              <BasicDetails
+                prevStep={prevStep}
+                nextStep={nextStep}
+                propertyDetails={propertyDetails}
+                setPropertyDetails={setPropertyDetails}
+              />
+            </Stepper.Step>
+            <Stepper.Step>
+              <Facilities
+                prevStep={prevStep}
+                propertyDetails={propertyDetails}
+                setPropertyDetails={setPropertyDetails}
+                setOpened={setOpened}
+                setActiveStep={setActive}
+              />
             </Stepper.Step>
             <Stepper.Completed>
               Completed, click back button to get to previous step

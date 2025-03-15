@@ -13,7 +13,7 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 const GeoCoderMarker = ({ address }) => {
   const map = useMap();
-  const [position, setPosition] = useState([60, 19]);
+  const [position, setPosition] = useState([31.9514, 115.8617]);
   useEffect(() => {
     ELG.geocode()
       .text(address)

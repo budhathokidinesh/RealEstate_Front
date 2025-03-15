@@ -17,9 +17,11 @@ const Header = () => {
     }
   };
   const [modalOpened, setModalOpened] = useState(false);
+
   const { validateLogin } = useAuthCheck();
+
   const handleAddPropertyClick = () => {
-    if (validateLogin) {
+    if (validateLogin()) {
       setModalOpened(true);
     }
   };
@@ -43,7 +45,7 @@ const Header = () => {
             <a href="mailto:physmarika@gmail.com">Contact</a>
 
             {/* Add property  */}
-            <div onClick={() => handleAddPropertyClick}>Add property</div>
+            <div onClick={handleAddPropertyClick}>Add property</div>
             <AddPropertyModal opened={modalOpened} setOpened={setModalOpened} />
             {/* Login Button  */}
             {!isAuthenticated ? (

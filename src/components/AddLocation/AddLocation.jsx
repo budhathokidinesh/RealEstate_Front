@@ -1,9 +1,12 @@
 import React from "react";
 import { useForm } from "@mantine/form";
 import { validateString } from "@/utils/common.js";
-import { Select } from "@mantine/core";
+import { Button, Group, Select, TextInput } from "@mantine/core";
+import useCountries from "@/components/hooks/useCountries.jsx";
+import Map from "@/components/Map/Map.jsx";
 
-const AddLocation = ({ propertyDetails, setPropertyDetails }) => {
+const AddLocation = ({ propertyDetails, setPropertyDetails, nextStep }) => {
+  const { getAll } = useCountries();
   const form = useForm({
     initialValues: {
       country: propertyDetails?.country,
@@ -16,25 +19,63 @@ const AddLocation = ({ propertyDetails, setPropertyDetails }) => {
       address: (value) => validateString(value),
     },
   });
-  const { country, city, address } = from.values;
+  const { country, city, address } = form.values;
+  const handleOnSubmit = () => {
+    const { hasErrors } = form.validate;
+    if (!hasErrors) {
+      setPropertyDetails((prev) => ({ ...prev, city, address, country }));
+      nextStep();
+    }
+  };
   return (
-    <form>
-      {/* left side  */}
-      <div className="flexCenter">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleOnSubmit();
+      }}
+    >
+      <div
+        className="flexCenter"
+        style={{
+          justifyContent: "space-between",
+          gap: "3rem",
+          marginTop: "3rem",
+        }}
+      >
+        {/* left side  */}
         {/* inouts  */}
-        <div className="flexColStart">
+        <div className="flexColStart" style={{ flex: 1 }}>
           <Select
             w={"100%"}
             withAsterisk
             label="Country"
             clearable
             searchable
+            data={getAll()}
             {...form.getInputProps("country", { type: "input" })}
           />
+          <TextInput
+            w={"100%"}
+            withAsterisk
+            label="City"
+            {...form.getInputProps("city", { type: "input" })}
+          />
+          <TextInput
+            w={"100%"}
+            withAsterisk
+            label="Address"
+            {...form.getInputProps("address", { type: "input" })}
+          />
+        </div>
+
+        {/* right side  */}
+        <div style={{ flex: 1 }}>
+          <Map address={address} city={city} country={country} />
         </div>
       </div>
-
-      {/* right side  */}
+      <Group position="center">
+        <Button type="submit">Next Step</Button>
+      </Group>
     </form>
   );
 };
