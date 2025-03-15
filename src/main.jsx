@@ -12,9 +12,9 @@ createRoot(document.getElementById("root")).render(
       domain="dev-gggkko07tnqd2zmc.us.auth0.com"
       clientId="PjxCs2yHVdik2SaBsJzMQF9KkgkBqwL3"
       authorizationParams={{
-        redirect_uri: "http://localhost:5173",
+        redirect_uri: "https://real-estate-fullstack-two.vercel.app",
       }}
-      audience="http://localhost:8000"
+      audience="https://realestate-back-1g3x.onrender.com"
       scope="openid profile email"
     >
       <MantineProvider withGlobalStyles withNormalizeCSS>
