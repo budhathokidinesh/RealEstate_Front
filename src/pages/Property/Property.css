@@ -47,3 +47,18 @@
   transform: scale(1.05);
   transition: all 300ms ease-in-out;
 }
+@media (max-width: 768px) {
+  .property-container > div {
+    flex-direction: column;
+  }
+  .head {
+    flex-direction: column;
+  }
+  .facilities {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .property-details > div {
+    width: 100%;
+  }
+}
